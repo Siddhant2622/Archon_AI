@@ -54,10 +54,10 @@ export function AnalysisProgress({ currentStep }: AnalysisProgressProps) {
       {/* Mock Terminal Output Area */}
       <div className="bg-[#0a0e14] rounded-xl p-4 font-mono text-xs text-text-secondary h-32 overflow-hidden border border-white/[0.04]">
         <div className="opacity-50 mb-2">Analysis log...</div>
-        {currentStep === 0 && <div className="text-accent-cyan animate-pulse">&gt; Fetching repository metadata...</div>}
-        {currentStep === 1 && <div className="text-accent-cyan animate-pulse">&gt; Indexing 14,203 files into AST...</div>}
-        {currentStep === 2 && <div className="text-accent-cyan animate-pulse">&gt; Running deep semantic analysis via Gemini 2.5 Pro...</div>}
-        {currentStep === 3 && <div className="text-accent-cyan animate-pulse">&gt; Formatting output and generating patches...</div>}
+        {currentStep === 0 && <div className="text-accent-cyan animate-pulse">> Fetching repository metadata...</div>}
+        {currentStep === 1 && <div className="text-accent-cyan animate-pulse">> Indexing 14,203 files into AST...</div>}
+        {currentStep === 2 && <div className="text-accent-cyan animate-pulse">> Running deep semantic analysis via Gemini 2.5 Pro...</div>}
+        {currentStep === 3 && <div className="text-accent-cyan animate-pulse">> Formatting output and generating patches...</div>}
       </div>
     </div>
   );
