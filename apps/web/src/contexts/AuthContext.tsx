@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { User, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signOut as firebaseSignOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, GithubAuthProvider, fetchSignInMethodsForEmail, linkWithCredential } from 'firebase/auth';
 import { auth, isFirebaseConfigured } from '@/lib/firebase/client';
 import { DemoUser, getCurrentUser, onAuthChange as onDemoAuthChange, signInWithEmail as demoSignInWithEmail, registerWithEmail as demoRegisterWithEmail, signOut as demoSignOut, signInWithProvider as demoSignInWithProvider } from '@/lib/auth';
+import { Capacitor } from '@capacitor/core';
 
 export type AppUser = User | DemoUser | null;
 
@@ -149,6 +150,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const oauthLogin = async (provider: 'google' | 'github') => {
+    // Check if running on Android/iOS native app
+    if (typeof window !== 'undefined' && Capacitor.isNativePlatform()) {
+      try {
+        const { FirebaseAuthentication } = await import('@capacitor-firebase/authentication');
+        if (provider === 'google') {
+          const result = await FirebaseAuthentication.signInWithGoogle({});
+          return result.user;
+        }
+      } catch (nativeErr) {
+        console.error('Native sign-in error:', nativeErr);
+      }
+    }
+
     if (isDemo) {
       return demoSignInWithProvider(provider);
     }
