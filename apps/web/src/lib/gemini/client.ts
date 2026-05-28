@@ -143,10 +143,12 @@ export async function analyzeCode(code: string): Promise<AnalysisResult> {
     // Validate and normalize
     parsed.score = Math.max(0, Math.min(100, parsed.score || 50));
     parsed.metrics = {
+      architecture: Math.max(0, Math.min(100, parsed.metrics?.architecture || 50)),
       performance: Math.max(0, Math.min(100, parsed.metrics?.performance || 50)),
       security: Math.max(0, Math.min(100, parsed.metrics?.security || 50)),
-      maintainability: Math.max(0, Math.min(100, parsed.metrics?.maintainability || 50)),
-      reliability: Math.max(0, Math.min(100, parsed.metrics?.reliability || 50)),
+      codeQuality: Math.max(0, Math.min(100, parsed.metrics?.codeQuality || 50)),
+      developerExperience: Math.max(0, Math.min(100, parsed.metrics?.developerExperience || 50)),
+      aiReadiness: Math.max(0, Math.min(100, parsed.metrics?.aiReadiness || 50)),
     };
     parsed.findings = (parsed.findings || []).map((f) => ({
       ...f,
@@ -175,8 +177,15 @@ export async function analyzeCode(code: string): Promise<AnalysisResult> {
           suggestion: 'Retry the analysis or simplify the code input.',
           confidence: 0.5,
         }],
-        metrics: { performance: 50, security: 50, maintainability: 50, reliability: 50 },
-      };
+        metrics: {
+          architecture: 50,
+          performance: 50,
+          security: 50,
+          codeQuality: 50,
+          developerExperience: 50,
+          aiReadiness: 50,
+        },
+      } as AnalysisResult;
     }
     throw error;
   }
