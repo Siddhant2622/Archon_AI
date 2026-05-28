@@ -59,7 +59,9 @@ export default function LiveDemo() {
   };
 
   useEffect(() => {
-    outputEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (output.length > 0) {
+      outputEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [output]);
 
   return (
