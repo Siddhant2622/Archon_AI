@@ -102,6 +102,13 @@ export default function DashboardLayout({
 
   useEffect(() => setMounted(true), []);
 
+  useEffect(() => {
+    // Redirect to login if not loading and no user
+    if (mounted && !user) {
+      window.location.href = "/login";
+    }
+  }, [user, mounted]);
+
   // Group nav items by section
   const sections = navItems.reduce<Record<string, NavItem[]>>((acc, item) => {
     const section = item.section || "Other";
@@ -272,7 +279,10 @@ export default function DashboardLayout({
               )}
               {!sidebarCollapsed && (
                 <button
-                  onClick={() => logout()}
+                  onClick={async () => {
+                    await logout();
+                    window.location.href = "/login";
+                  }}
                   className="p-2 text-text-muted hover:text-accent-rose hover:bg-accent-rose/10 rounded-lg transition-all"
                   aria-label="Sign out"
                 >
