@@ -112,9 +112,9 @@ const NeuralNetwork = ({ isMobile }: { isMobile: boolean }) => {
       </points>
       <lineSegments ref={linesRef}>
         <bufferGeometry>
-          <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
-          <bufferAttribute attach="index" count={lines.length} array={lines} itemSize={1} />
-          <bufferAttribute attach="attributes-color" count={colors.length / 3} array={colors} itemSize={3} />
+          <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+          <bufferAttribute attach="index" args={[lines, 1]} />
+          <bufferAttribute attach="attributes-color" args={[colors, 3]} />
         </bufferGeometry>
         <lineBasicMaterial vertexColors transparent opacity={0.6} blending={THREE.AdditiveBlending} />
       </lineSegments>
